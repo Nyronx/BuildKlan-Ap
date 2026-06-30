@@ -1,0 +1,275 @@
+<body style="background-color: #2f3136; margin: 0; font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; position: relative; overflow: hidden;">
+
+  <!-- ÜST PANEL -->
+  <div style="background-color: #202225; padding: 10px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: space-between; z-index: 20; height: 50px;">
+    
+    <!-- YENİ EKLENEN LOGO ALANI -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <!-- Logo Amblemi -->
+      <div style="position: relative; width: 38px; height: 38px; background: linear-gradient(135deg, #ed4245, #5865f2); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(237, 66, 69, 0.4); transform: rotate(-5deg);">
+        <span style="color: white; font-weight: 900; font-size: 20px; font-family: 'Arial Black', sans-serif; transform: rotate(5deg); text-shadow: 2px 2px 0px rgba(0,0,0,0.3);">B</span>
+        <!-- Küçük Detay Çizgisi -->
+        <div style="position: absolute; bottom: 3px; right: 3px; width: 6px; height: 6px; background-color: #3ba55d; border-radius: 50%;"></div>
+      </div>
+      <!-- Logo Yazısı -->
+      <h1 style="margin: 0; font-size: 20px; font-family: 'Impact', 'Arial Black', sans-serif; letter-spacing: 1px; text-transform: uppercase;">
+        <span style="color: #ed4245; text-shadow: 1px 1px 0px #000;">Built</span><span style="color: #9b59b6; text-shadow: 1px 1px 0px #000;">Klan</span>
+      </h1>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <span id="aktifSohbetBaslik" style="color: white; font-weight: bold; font-size: 16px;">💬 Genel Sohbet</span>
+      
+      <div id="aramaButonlari" style="display: none; gap: 10px;">
+        <button onclick="aramaYap('sesli')" style="background-color: #3ba55d; color: white; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 13px;">📞 Ara</button>
+        <button onclick="aramaYap('goruntulu')" style="background-color: #5865f2; color: white; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 13px;">📷 Görüntülü</button>
+      </div>
+    </div>
+
+    <div onclick="ayarlariAc()" style="display: flex; align-items: center; gap: 10px; background-color: #2f3136; padding: 5px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s;">
+      <img id="profilFoto" src="https://picsum.photos/40" style="border-radius: 50%; width: 32px; height: 32px; object-fit: cover;">
+      <div>
+        <span id="profilIsmi" style="color: white; font-weight: bold; font-size: 13px; display: block;">Built_Klan_Lideri</span>
+        <span id="profilKoduUst" style="color: #b9bbbe; font-size: 10px;">#00000</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="flex: 1; display: flex; overflow: hidden; position: relative;">
+    
+    <div style="width: 220px; background-color: #2f3136; border-right: 2px solid #202225; padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+      <h3 style="color: #b9bbbe; margin: 0; font-size: 12px; text-transform: uppercase;">💬 Kanallar & DM</h3>
+      <div onclick="sohbetDegistir('genel')" id="btn-genel" style="padding: 10px; background-color: #40444b; color: white; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px;">🌎 Genel Chat</div>
+      
+      <h3 style="color: #b9bbbe; margin: 10px 0 0 0; font-size: 12px; text-transform: uppercase;">👥 Arkadaşlarım</h3>
+      <div id="arkadasListesi" style="display: flex; flex-direction: column; gap: 5px; overflow-y: auto; flex: 1;"></div>
+    </div>
+
+    <div style="flex: 1; display: flex; flex-direction: column; background-color: #36393f; position: relative;">
+      <div id="mesajlar" style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 70px;"></div>
+
+      <form onsubmit="mesajGonder(event)" style="position: absolute; bottom: 0; left: 0; right: 0; background-color: #36393f; padding: 15px; display: flex; gap: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <input type="text" id="mesajKutusu" placeholder="Mesaj gönder..." style="flex: 1; background-color: #40444b; border: none; padding: 12px; border-radius: 8px; color: white; font-size: 15px; outline: none;">
+        <button style="background-color: #5865f2; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;">Gönder</button>
+      </form>
+    </div>
+
+    <div style="width: 260px; background-color: #2f3136; border-left: 2px solid #202225; padding: 15px; display: flex; flex-direction: column; gap: 15px;">
+      <h3 style="color: white; margin: 0; font-size: 14px; border-bottom: 1px solid #4f545c; padding-bottom: 10px;">⚙️ İstek Paneli</h3>
+      <div style="background-color: #202225; padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #b9bbbe; font-size: 11px;">Kodun:</span>
+        <span id="yanPanelKod" style="color: #3ba55d; font-weight: bold; font-size: 13px;">#00000</span>
+      </div>
+      <label style="color: #b9bbbe; font-size: 11px; font-weight: bold; text-transform: uppercase;">İstek Simüle Et</label>
+      <div style="display: flex; gap: 5px;">
+        <input type="text" id="istekKodKutusu" placeholder="Örn: #12345" style="flex: 1; background-color: #202225; border: none; padding: 6px; border-radius: 5px; color: white; font-size: 12px; outline: none;">
+        <button onclick="istekGonderSimule()" style="background-color: #3ba55d; color: white; border: none; padding: 5px 8px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: bold;">Ekle</button>
+      </div>
+      <label style="color: #b9bbbe; font-size: 11px; font-weight: bold; text-transform: uppercase;">📥 Gelen İstekler</label>
+      <div id="isteklerKutusu" style="background-color: #202225; border-radius: 6px; padding: 10px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; max-height: 250px;"></div>
+    </div>
+
+  </div>
+
+  <!-- ARAMA EKRANI -->
+  <div id="aramaEkrani" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(24, 25, 28, 0.95); z-index: 500; flex-direction: column; align-items: center; justify-content: center; gap: 20px;">
+    <div style="width: 120px; height: 120px; border-radius: 50%; background-color: #5865f2; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px #5865f2;">
+      <span style="color: white; font-size: 50px;">👤</span>
+    </div>
+    <h2 id="aramaIsim" style="color: white; margin: 0;">Oyuncu</h2>
+    <p id="aramaDurum" style="color: #3ba55d; font-weight: bold; animation: pulse 1.5s infinite;">Aranıyor...</p>
+    <button onclick="aramayiKapat()" style="background-color: #ed4245; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 20px;">Aramayı Kapat</button>
+  </div>
+
+  <!-- PROFİL AYARLARI PENCERESİ -->
+  <div id="ayarlarPenceresi" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background-color: #36393f; padding: 25px; border-radius: 12px; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 15px;">
+      <h3 style="color: white; margin: 0; font-size: 18px; border-bottom: 1px solid #4f545c; padding-bottom: 10px;">⚙️ Profil Ayarları</h3>
+      
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: #b9bbbe; font-size: 12px; font-weight: bold;">Yeni Kullanıcı Adı:</label>
+        <input type="text" id="yeniIsimKutusu" style="background-color: #202225; border: none; padding: 10px; border-radius: 6px; color: white; outline: none;">
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="color: #b9bbbe; font-size: 12px; font-weight: bold;">Profil Resmi Linki (URL):</label>
+        <input type="text" id="yeniFotoKutusu" style="background-color: #202225; border: none; padding: 10px; border-radius: 6px; color: white; outline: none;">
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button onclick="profiliKaydet()" style="flex: 1; background-color: #3ba55d; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer;">Kaydet</button>
+        <button onclick="ayarlariKapat()" style="flex: 1; background-color: #4f545c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer;">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  let aktifSohbet = "genel";
+  
+  let aramaSesi = new Audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"); 
+  aramaSesi.loop = true;
+
+  window.onload = function() {
+    if (!localStorage.getItem("klanKullaniciAdi")) localStorage.setItem("klanKullaniciAdi", "Built_Klan_Lideri");
+    if (!localStorage.getItem("klanProfilFotosu")) localStorage.setItem("klanProfilFotosu", "https://picsum.photos/40");
+    if (!localStorage.getItem("klanKodu")) localStorage.setItem("klanKodu", "#" + Math.floor(10000 + Math.random() * 90000));
+    if (!localStorage.getItem("arkadaslar")) {
+      localStorage.setItem("arkadaslar", JSON.stringify(["Built_Gamer#12345", "Klan_Savascisi#98765", "Pro_Build_07#44211"]));
+    }
+
+    document.getElementById("profilIsmi").innerText = localStorage.getItem("klanKullaniciAdi");
+    document.getElementById("profilFoto").src = localStorage.getItem("klanProfilFotosu");
+    document.getElementById("profilKoduUst").innerText = localStorage.getItem("klanKodu");
+    document.getElementById("yanPanelKod").innerText = localStorage.getItem("klanKodu");
+
+    arkadaslariYukle();
+    istekleriYenile();
+    mesajlariYukle();
+  };
+
+  function arkadaslariYukle() {
+    let liste = document.getElementById("arkadasListesi");
+    let arkadaslar = JSON.parse(localStorage.getItem("arkadaslar")) || [];
+    liste.innerHTML = "";
+    arkadaslar.forEach(arkadas => {
+      liste.innerHTML += `<div onclick="sohbetDegistir('${arkadas}')" id="btn-${arkadas}" style="padding: 8px; color: #b9bbbe; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">👤 ${arkadas.split('#')[0]}</div>`;
+    });
+  }
+
+  function sohbetDegistir(hedef) {
+    aktifSohbet = hedef;
+    document.getElementById("btn-genel").style.backgroundColor = (hedef === "genel") ? "#4f545c" : "transparent";
+    let arkadaslar = JSON.parse(localStorage.getItem("arkadaslar")) || [];
+    arkadaslar.forEach(ark => {
+      let btn = document.getElementById(`btn-${ark}`);
+      if (btn) btn.style.backgroundColor = (hedef === ark) ? "#4f545c" : "transparent";
+    });
+
+    if (hedef === "genel") {
+      document.getElementById("aktifSohbetBaslik").innerText = "🌎 Genel Chat";
+      document.getElementById("aramaButonlari").style.display = "none";
+    } else {
+      document.getElementById("aktifSohbetBaslik").innerText = "👤 " + hedef.split('#')[0];
+      document.getElementById("aramaButonlari").style.display = "flex";
+    }
+    mesajlariYukle();
+  }
+
+  function mesajGonder(event) {
+    event.preventDefault();
+    let kutu = document.getElementById("mesajKutusu");
+    let aktifNick = localStorage.getItem("klanKullaniciAdi");
+    if(kutu.value.trim() !== "") {
+      let tumMesajlar = JSON.parse(localStorage.getItem("mesajDeposu_" + aktifSohbet)) || [];
+      tumMesajlar.push({ gonderen: aktifNick, metin: kutu.value });
+      localStorage.setItem("mesajDeposu_" + aktifSohbet, JSON.stringify(tumMesajlar));
+      kutu.value = "";
+      mesajlariYukle();
+    }
+  }
+
+  function mesajlariYukle() {
+    let alan = document.getElementById("mesajlar");
+    let tumMesajlar = JSON.parse(localStorage.getItem("mesajDeposu_" + aktifSohbet)) || [];
+    alan.innerHTML = "";
+    tumMesajlar.forEach(msg => {
+      alan.innerHTML += `<div style='display: flex; flex-direction: column; align-self: flex-start; max-width: 70%;'><span style='color: #b9bbbe; font-size: 12px; font-weight: bold; margin-left: 5px;'>${msg.gonderen}</span><div style='background-color: #40444b; color: white; padding: 12px 16px; border-radius: 8px; font-size: 15px;'>${msg.metin}</div></div>`;
+    });
+    alan.scrollTop = alan.scrollHeight;
+  }
+
+  function aramaYap(tur) {
+    document.getElementById("aramaIsim").innerText = aktifSohbet.split('#')[0];
+    document.getElementById("aramaDurum").innerText = (tur === "sesli") ? "📞 Sesli Sohbet Aranıyor..." : "📷 Görüntülü Sohbet Bağlanıyor...";
+    document.getElementById("aramaEkrani").style.display = "flex";
+    
+    aramaSesi.currentTime = 0;
+    let oynatildi = aramaSesi.play();
+    
+    if (oynatildi !== undefined) {
+      oynatildi.catch(error => {
+        console.log("Tarayıcı engelledi, sayfaya bir kez tıklayıp tekrar aramayı dene!", error);
+      });
+    }
+  }
+
+  function aramayiKapat() {
+    document.getElementById("aramaEkrani").style.display = "none";
+    aramaSesi.pause(); 
+  }
+
+  function istekGonderSimule() {
+    let kodGiriş = document.getElementById("istekKodKutusu").value.trim();
+    if (kodGiriş === "") return;
+    let mevcutIstekler = JSON.parse(localStorage.getItem("gelenIstekler")) || [];
+    mevcutIstekler.push("Oyuncu_" + kodGiriş);
+    localStorage.setItem("gelenIstekler", JSON.stringify(mevcutIstekler));
+    document.getElementById("istekKodKutusu").value = ""; 
+    istekleriYenile(); 
+  }
+
+  function istekleriYenile() {
+    let kutu = document.getElementById("isteklerKutusu");
+    let istekler = JSON.parse(localStorage.getItem("gelenIstekler")) || [];
+    if (istekler.length === 0) {
+      kutu.innerHTML = '<span style="color: #72767d; font-size: 11px; font-style: italic; text-align: center;">Gelen istek yok...</span>';
+    } else {
+      kutu.innerHTML = "";
+      istekler.forEach((istek, index) => {
+        kutu.innerHTML += `
+          <div style="background-color: #36393f; padding: 8px; border-radius: 4px; color: white; font-size: 11px; display: flex; flex-direction: column; gap: 5px;">
+            <span>👤 ${istek}</span>
+            <div style="display: flex; gap: 5px; justify-content: flex-end;">
+              <button onclick="istekIslem(${index}, 'kabul', '${istek}')" style="background-color: #3ba55d; color: white; border: none; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: bold;">Kabul</button>
+              <button onclick="istekIslem(${index}, 'red', '${istek}')" style="background-color: #ed4245; color: white; border: none; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: bold;">Reddet</button>
+            </div>
+          </div>`;
+      });
+    }
+  }
+
+  function istekIslem(index, eylem, isim) {
+    let istekler = JSON.parse(localStorage.getItem("gelenIstekler")) || [];
+    istekler.splice(index, 1);
+    localStorage.setItem("gelenIstekler", JSON.stringify(istekler));
+    
+    if (eylem === 'kabul') {
+      let arkadaslar = JSON.parse(localStorage.getItem("arkadaslar")) || [];
+      arkadaslar.push(isim + "#" + Math.floor(10000 + Math.random() * 90000));
+      localStorage.setItem("arkadaslar", JSON.stringify(arkadaslar));
+      arkadaslariYukle();
+    }
+    
+    istekleriYenile();
+  }
+
+  function ayarlariAc() {
+    document.getElementById("yeniIsimKutusu").value = localStorage.getItem("klanKullaniciAdi");
+    document.getElementById("yeniFotoKutusu").value = localStorage.getItem("klanProfilFotosu");
+    document.getElementById("ayarlarPenceresi").style.display = "flex";
+  }
+
+  function ayarlariKapat() {
+    document.getElementById("ayarlarPenceresi").style.display = "none";
+  }
+
+  function profiliKaydet() {
+    let yeniIsim = document.getElementById("yeniIsimKutusu").value.trim();
+    let yeniFoto = document.getElementById("yeniFotoKutusu").value.trim();
+
+    if (yeniIsim !== "") localStorage.setItem("klanKullaniciAdi", yeniIsim);
+    if (yeniFoto !== "") localStorage.setItem("klanProfilFotosu", yeniFoto);
+
+    document.getElementById("profilIsmi").innerText = localStorage.getItem("klanKullaniciAdi");
+    document.getElementById("profilFoto").src = localStorage.getItem("klanProfilFotosu");
+
+    ayarlariKapat();
+  }
+  </script>
+
+  <style>
+    @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+  </style>
+
+</body>
